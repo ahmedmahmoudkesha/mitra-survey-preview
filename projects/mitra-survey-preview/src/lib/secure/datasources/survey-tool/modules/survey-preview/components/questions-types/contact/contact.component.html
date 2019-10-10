@@ -1,0 +1,64 @@
+<form [formGroup]="form">
+  <ng-container *ngFor="let control of keys(form.controls)">
+    <ng-container *ngIf="control !== 'additional_info_picture_url'">
+      <mat-form-field appearance="outline" class="col-lg-12 mt-3 p-0">
+        <mat-label>{{ control | translate }}</mat-label>
+        <input
+          matInput
+          [formControlName]="control"
+          [required]="question.required"
+        />
+        <mat-error
+          *ngIf="form.get('phone_number')?.errors && control == 'phone_number'"
+          [style.color]="
+            __surveyPreviewService.surveyFile.survey_styles.question_text_color
+          "
+          [ngStyle]="{ 'line-height': '0px' }"
+        >
+          <p
+            *ngFor="
+              let item of this.messages.custom_messages
+                .contact_block_phone_format_error_text
+            "
+          >
+            <span
+              class="fs-07"
+              *ngIf="
+                item.lang_code ===
+                __surveyPreviewService.surveyFile.survey_settings
+                  .selectedLanguage.code
+              "
+            >
+              {{ item.text }}
+            </span>
+          </p>
+        </mat-error>
+        <mat-error
+          *ngIf="form.get('email')?.errors && control == 'email'"
+          [style.color]="
+            __surveyPreviewService.surveyFile.survey_styles.question_text_color
+          "
+          [ngStyle]="{ 'line-height': '0px' }"
+        >
+          <p
+            *ngFor="
+              let item of this.messages.custom_messages
+                .contact_block_email_format_error_text
+            "
+          >
+            <span
+              class="fs-07"
+              *ngIf="
+                item.lang_code ===
+                __surveyPreviewService.surveyFile.survey_settings
+                  .selectedLanguage.code
+              "
+            >
+              {{ item.text }}
+            </span>
+          </p>
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+  </ng-container>
+</form>

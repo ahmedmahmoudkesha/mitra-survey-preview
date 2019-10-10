@@ -1,0 +1,29 @@
+<div *ngIf="isScaleMatrix">
+    <div class="likert-label-container">
+        <span
+            *ngFor="
+                let opt of properties.labels | hideDeletedOption;
+                let i = index
+            "
+            class="flex-1 label"
+        >
+            <span
+                *ngIf="opt.wordings[0] && opt.wordings[0].text"
+                [style.color]="
+                    __surveyPreviewService.surveyFile.survey_styles
+                        .answer_text_color
+                "
+            >
+                <span
+                    [innerHtml]="
+                        __surveyPreviewService.getCurrentWording(opt.wordings)
+                            ?.text
+                            | replaceQueryParam
+                            | bypassSanitizer
+                    "
+                >
+                </span>
+            </span>
+        </span>
+    </div>
+</div>

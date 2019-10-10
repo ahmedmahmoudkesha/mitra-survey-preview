@@ -1,0 +1,197 @@
+<div
+  class="background-div"
+  [ngStyle]="{
+    'background-image':
+      'url(' +
+      questionManager.__surveyPreviewService.surveyFile.survey_styles
+        .background_image +
+      ')',
+    'background-color':
+      questionManager.__surveyPreviewService.surveyFile.survey_styles
+        .background_color
+  }"
+  [class.build-preview]="questionManager.__surveyPreviewService.isBuildPreview"
+></div>
+<div
+  class="opacity-div"
+  [ngStyle]="{
+    opacity: questionManager.__surveyPreviewService.surveyFile.survey_styles?.opacity?.toString(),
+    'background-color': questionManager.__surveyPreviewService.surveyFile
+      .survey_styles.background_image
+      ? 'white'
+      : questionManager.__surveyPreviewService
+  }"
+  [class.build-preview]="questionManager.__surveyPreviewService.isBuildPreview"
+></div>
+<button
+  mat-icon-button
+  (click)="reset()"
+  matTooltip="Reset All Inputs"
+  class="reset-button"
+  *ngIf="questionManager.__surveyPreviewService.isBuildPreview"
+>
+  <fa-icon [icon]="['fal', 'redo-alt']"></fa-icon>
+</button>
+
+<button
+  mat-icon-button
+  (click)="jump_logic_toggel()"
+  matTooltip="Jump Logic"
+  class="jump-logic-button"
+  [ngClass]="{ 'bg-green': jump_logic_flag }"
+  href="#top0"
+  *ngIf="questionManager.__surveyPreviewService.isBuildPreview"
+>
+  <fa-icon [icon]="['fal', 'share-alt']"></fa-icon>
+</button>
+
+<button
+  mat-icon-button
+  [matMenuTriggerFor]="menu"
+  class="language-button"
+  *ngIf="
+    questionManager.__surveyPreviewService.surveyFile?.survey_settings &&
+    !questionManager.__surveyPreviewService.isBuildPreview
+  "
+>
+  <img
+    style="width: 24px;"
+    [src]="
+      questionManager.__surveyPreviewService.surveyFile.survey_settings
+        .selectedLanguage.logo
+    "
+  />
+</button>
+<mat-menu #menu="matMenu">
+  <ng-template matMenuContent>
+    <button
+      mat-menu-item
+      *ngFor="
+        let lang of questionManager.__surveyPreviewService.surveyFile
+          .survey_settings.languages
+      "
+      (click)="changeLanguage(lang)"
+    >
+      <img [src]="lang.logo" [alt]="lang.name" width="24" class="mt--3px" />
+      <span class="text300 ml-3">{{ lang.name }}</span>
+    </button>
+  </ng-template>
+</mat-menu>
+
+<button
+  mat-button
+  matTooltip="Stop timer"
+  class="timer"
+  (click)="runTimer(false)"
+  *ngIf="questionManager.__surveyPreviewService.isBuildPreview"
+>
+  {{ counter | secondsToTime }}
+</button>
+
+<div class="position-relative z-index-3 aligner w-100">
+  <div
+    class="container survey-container"
+    *ngIf="surveyFile"
+    [class.build-preview]="
+      questionManager.__surveyPreviewService.isBuildPreview
+    "
+  >
+    <div class="row pb-5" id="survey-preview">
+      <div class="col-12" id="top">
+        <div
+          *ngFor="
+            let question of surveyFile.targetQuestions | questions: 'welcome'
+          "
+        >
+          <mitra-welcome-screen
+            *ngIf="
+              questionManager.focused_question &&
+              questionManager.focused_question.question_type_id == 12
+            "
+            id="block-{{ question.front_id }}"
+            [question]="question"
+            [width]="width"
+          >
+          </mitra-welcome-screen>
+        </div>
+        <div
+          id="custom-container"
+          *ngFor="
+            let question of questionManager.questions
+              | questions
+              | hideDeletedQuestion;
+            let i = index
+          "
+          (click)="questionManager.goToQuestion(question.front_id)"
+        >
+          <div
+            *ngIf="
+              questionManager.focused_question?.question_type_id != 12 &&
+              questionManager.focused_question?.question_type_id != 13
+            "
+            id="top-{{ i }}"
+            class="pt-2"
+          >
+            <!--Normal Questions-->
+            <div
+              *ngIf="
+                questionManager.focused_question &&
+                questionManager.focused_question.question_type_id !== 12 &&
+                questionManager.focused_question.question_type_id !== 13
+              "
+              id="block-{{ question.front_id }}"
+            >
+              <mitra-question-block
+                (click)="runTimer(true)"
+                [focused_question]="questionManager.focused_question"
+                *ngIf="surveyAnswerForm"
+                [displayIndex]="question.seq"
+                [question]="question"
+                [form]="surveyAnswerForm"
+                [isNested]="question.isNested"
+              ></mitra-question-block>
+            </div>
+          </div>
+        </div>
+        <!--End Screen-->
+        <div
+          *ngIf="
+            questionManager.focused_question &&
+            questionManager.focused_question.question_type_id == 13
+          "
+        >
+          <mitra-end-screen
+            id="block-{{ questionManager.focused_question.front_id }}"
+            [question]="questionManager.focused_question"
+            [width]="width"
+          >
+          </mitra-end-screen>
+        </div>
+        <!--End Screen-->
+      </div>
+      <div
+        class="col-12"
+        *ngIf="
+          questionManager.focused_question &&
+          questionManager.focused_question.question_type_id !== 12 &&
+          questionManager.focused_question.question_type_id !== 13
+        "
+      >
+        <button
+          *ngIf="questionManager.show_submit"
+          id="block-submit"
+          class="submit-button-survey"
+          type="submit"
+          mat-button
+          (click)="submitForm()"
+          [style.background-color]="surveyFile.survey_styles.button_color"
+        >
+          <div>
+            <fa-icon [icon]="['fal', 'paper-plane']"></fa-icon>&nbsp;&nbsp;
+            Submit
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

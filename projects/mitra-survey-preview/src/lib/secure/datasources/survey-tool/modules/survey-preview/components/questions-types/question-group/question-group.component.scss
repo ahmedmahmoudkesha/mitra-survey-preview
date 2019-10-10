@@ -1,0 +1,19 @@
+.likert-label-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: auto;
+
+    .label {
+        text-align: center;
+
+        &:first-of-type {
+            text-align: left;
+        }
+
+        &:last-of-type {
+            text-align: right;
+        }
+
+    }
+}

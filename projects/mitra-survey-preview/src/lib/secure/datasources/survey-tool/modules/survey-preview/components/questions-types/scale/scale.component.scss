@@ -1,0 +1,43 @@
+.likert-label-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto 10px auto;
+
+    .label {
+        text-align: center;
+
+        &:first-of-type {
+            text-align: left;
+        }
+
+        &:last-of-type {
+            text-align: right;
+        }
+
+    }
+}
+
+.likerScaleList {
+    margin-bottom: 40px;
+}
+
+.likerScaleList ::ng-deep mat-radio-group {
+    display: flex;
+    text-align: center;
+}
+
+.likerScaleList ::ng-deep mat-radio-group span {
+    flex:1;
+    font-size: 0.8rem;
+}
+
+.likerScaleList ::ng-deep .mat-radio-button {
+    position: relative;
+}
+
+.likerScaleList ::ng-deep .mat-radio-label-content {
+    position: absolute;
+    top: 30px;
+    left: -3px;
+}

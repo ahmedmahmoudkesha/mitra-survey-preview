@@ -1,0 +1,122 @@
+.question-block {
+    min-height: 500px;
+    padding: 0 0 150px 0;
+    position: relative;
+
+    &.last {
+        min-height: 500px !important;
+        padding-bottom: 150px !important;
+    }
+
+    //&.question-group {
+    //    min-height: auto;
+    //    padding: 0;
+    //}
+    //
+    //&.scale-matrix {
+    //    min-height: auto;
+    //    padding: 0;
+    //}
+
+    &.question-group {
+        min-height: auto;
+        padding: 0 0 50px 0;
+    }
+
+
+    &.scale-matrix-child, &.scale-matrix {
+        min-height: auto;
+        padding: 0;
+
+        .question-directive {
+            padding-top: 0;
+        }
+    }
+
+    &.scale-matrix-child {
+        .survey-number {
+            font-size: 15px;
+            margin-top: 0;
+        }
+        .survey-question {
+            font-size: 15px;
+            margin-top: 0;
+        }
+    }
+
+
+    @media screen and (max-width: 992px) {
+        min-height: 360px;
+        padding: 0 0 60px 0;
+    }
+
+    &.question-group {
+        .question-directive:not(.is-nested) {
+            width: calc(100% + 33px);
+            margin-left: -33px;
+            max-width: calc(100% + 33px) !important;
+            flex: auto !important;
+        }
+    }
+
+    .question-directive {
+        padding-top: 30px;
+    }
+
+    .survey-number {
+        font-size: 23px;
+        line-height: 26px;
+        font-weight: 500;
+        min-width: 33px;
+        padding-right: 5px;
+        margin-top: 4px;
+    }
+
+    .survey-area {
+        flex-grow: 1;
+    }
+
+    .survey-question {
+        font-size: 23px;
+        font-weight: 400;
+    }
+}
+
+.special-div {
+    width: 0px !important;
+}
+
+.sticky {
+    background-color: transparent;
+    border-radius: 10px;
+    transition: 900ms ease background-color, 900ms ease color, 300ms padding;
+    margin-bottom: 250px;
+
+    .survey-number {
+        display: none;
+    }
+
+    .survey-question {
+        display: none;
+    }
+
+    &--hit {
+        background-color: #e0e0e0;
+        box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        transition: 900ms ease background-color, 900ms ease color, 300ms padding;
+        border-radius: 10px;
+        z-index: 3;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+        .survey-number {
+            display: block;
+        }
+
+        .survey-question {
+            display: block;
+        }
+    }
+}

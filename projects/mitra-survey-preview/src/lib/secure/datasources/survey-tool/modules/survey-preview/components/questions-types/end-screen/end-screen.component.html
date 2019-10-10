@@ -1,0 +1,61 @@
+<img *ngIf="question.properties['additional_info_picture_url']" src="{{question.properties['additional_info_picture_url']}}" style="max-width: 100%">
+<div
+    class="survey-title col-12"
+    [style.color]="
+                __surveyPreviewService.surveyFile.survey_styles
+                    .answer_text_color
+            "
+    [innerHTML]="
+                (__surveyPreviewService.getCurrentWording(
+                    this.question.wordings
+                )?.text) | replaceQueryParam
+            "
+></div>
+<div
+    class="col-12"
+    [style.color]="
+                __surveyPreviewService.surveyFile.survey_styles
+                    .answer_text_color
+            "
+    [innerHTML]="
+                (__surveyPreviewService.getCurrentWording(
+                    this.question.description
+                )?.text) | replaceQueryParam
+            "
+></div>
+<div class="col-lg-12 text-left"
+     [style.color]="
+        __surveyPreviewService.surveyFile.survey_styles
+            .answer_text_color
+    " *ngIf="properties.redirect_url"
+>
+<p *ngFor="let item of this.messages.custom_messages.redirect_text">
+        <span *ngIf="item.lang_code === __surveyPreviewService.surveyFile.survey_settings.selectedLanguage.code">
+            {{item.text}} {{timeToRedirect}}
+        </span>
+    </p> 
+</div>
+<div class="col-12 pt-4 pb-4">
+    <button
+        mat-button
+        (click)="start_survey()"
+        id="continue-button"
+        [style.background-color]="
+                __surveyPreviewService.surveyFile.survey_styles.button_color
+            "
+        [ngStyle]="{
+                color:
+                    __surveyPreviewService.surveyFile.survey_styles
+                        .button_text_color,
+                'background-color':
+                    __surveyPreviewService.surveyFile.survey_styles.button_color
+            }"
+    >
+        <p *ngFor="let item of this.messages.custom_messages.return_button">
+            <span *ngIf="item.lang_code === __surveyPreviewService.surveyFile.survey_settings.selectedLanguage.code">
+                {{item.text}}
+            </span>
+        </p>
+    </button>
+</div>
+

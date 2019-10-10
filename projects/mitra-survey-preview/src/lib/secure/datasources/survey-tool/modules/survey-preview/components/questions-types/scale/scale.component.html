@@ -1,0 +1,82 @@
+<div class="likert-label-container" [ngClass]="(max <= 10 && step === 1 && properties.radio_box) ? 'pl-4 pr-4' : ''">
+    <span *ngFor="let opt of properties.labels | hideDeletedOption; let i = index" class="flex-1 label">
+        <span
+            *ngIf="opt.wordings[0] && opt.wordings[0].text"
+            [style.color]="
+                __surveyPreviewService.surveyFile.survey_styles
+                    .answer_text_color
+            "
+        >
+            <span
+                [innerHtml]="
+                    __surveyPreviewService.getCurrentWording(opt.wordings)
+                        ?.text
+                        | replaceQueryParam
+                        | bypassSanitizer
+                "
+            >
+            </span>
+        </span>
+    </span>
+</div>
+<div [formGroup]="form">
+    <mat-slider
+        formControlName="0"
+        class="w-100"
+        thumbLabel
+        tickInterval="1"
+        [step]="step"
+        [min]="min"
+        [max]="max"
+        *ngIf="!properties.radio_box; else displayLikertRadioScale"
+    >
+    </mat-slider>
+    <ng-template #displayLikertRadioScale>
+        <div [ngSwitch]="question.question_type_id">
+            <div *ngSwitchCase='5'>
+                <div class="likerScaleList">
+                    <mat-radio-group aria-label="Select an option" formControlName="0">
+                                        <span *ngFor="let scaleItem of [1,2,3,4,5,6,7];">
+                                            <mat-radio-button [value]="scaleItem" color="primary">
+                                                    <span [style.color]="
+                __surveyPreviewService.surveyFile.survey_styles
+                    .answer_text_color
+            ">{{scaleItem}}</span>
+                                            </mat-radio-button>
+                                        </span>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div *ngSwitchCase='14'>
+                <div *ngIf="max <= 10 && step === 1; else displayScaleSlide">
+                    <div class="likerScaleList">
+                        <mat-radio-group aria-label="Select an option" formControlName="0">
+                            <ng-container *ngFor="let dummy of ' '.repeat(max).split(''), let x = index">
+                               <span *ngIf="x+1 >= min">
+                                    <mat-radio-button [value]="x+1" color="primary">
+                                            <span [style.color]="
+                                                __surveyPreviewService.surveyFile.survey_styles
+                                                    .answer_text_color
+                                            ">{{x+1}}</span>
+                                    </mat-radio-button>
+                                </span>
+                            </ng-container>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+            <ng-template #displayScaleSlide>
+                <mat-slider
+                    formControlName="0"
+                    class="w-100"
+                    thumbLabel
+                    tickInterval="1"
+                    [step]="step"
+                    [min]="min"
+                    [max]="max"
+                >
+                </mat-slider>
+            </ng-template>
+        </div>
+    </ng-template>
+</div>

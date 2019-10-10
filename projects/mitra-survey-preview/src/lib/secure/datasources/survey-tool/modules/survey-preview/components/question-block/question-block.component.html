@@ -1,0 +1,126 @@
+<div class="question-block col-lg-12" [ngClass]="getNestedCssClass()">
+    <div
+        class="z-index-3 position-absolute special-div"
+        id="parent-{{ question.front_id }}"
+        *ngIf="question.question_type_id === types.QUESTION_GROUP"
+    >
+        <mitra-sticky-header
+            *ngIf="widthSticky"
+            class="sticky container"
+            stickyClass="sticky--hit"
+            [ngStyle]="{
+        'background-color':
+          __surveyPreviewService.surveyFile.survey_styles.background_color,
+        width: widthSticky + 'px'
+      }"
+        >
+            <div
+                class="survey-number"
+                [style.color]="
+          __surveyPreviewService.surveyFile.survey_styles.question_number_color
+        "
+            >
+                {{ displayIndex }}
+            </div>
+            <div
+                class="survey-question no-margin col-12 p-0"
+                [ngClass]="{ 'is-nested': isNested }"
+                [style.color]="
+          __surveyPreviewService.surveyFile.survey_styles.question_text_color
+        "
+                [innerHTML]="
+          (getQuestionWording(question)?.text
+            ? getQuestionWording(question)?.text
+            : '...')
+            | replaceQueryParam
+            | bypassSanitizer
+        "
+            ></div>
+        </mitra-sticky-header>
+    </div>
+
+    <div
+        class="question-block-content w-100 d-flex align-items-start justify-content-start"
+    >
+        <div
+            class="survey-number"
+            [style.color]="
+        __surveyPreviewService.surveyFile.survey_styles.question_number_color
+      "
+        >
+            {{ displayIndex }}
+        </div>
+        <div class="survey-area row">
+            <div class="col-12 mb-3 p-0" *ngIf="checkAdditionalInfoPicture(question)">
+                <img
+                    class="mw-100"
+                    [src]="question.properties.additional_info_picture_url"
+                />
+            </div>
+            <div
+                class="survey-question no-margin col-12 p-0"
+                [style.color]="
+          __surveyPreviewService.surveyFile.survey_styles.question_text_color
+        "
+                [innerHTML]="
+          (getQuestionWording(question)?.text
+            ? getQuestionWording(question)?.text
+            : '...')
+            | replaceQueryParam
+            | bypassSanitizer
+        "
+            ></div>
+            <div
+                [style.color]="
+          __surveyPreviewService.surveyFile.survey_styles.question_text_color
+        "
+                *ngIf="question.has_description"
+                [innerHTML]="
+          __surveyPreviewService.getCurrentWording(question.description).text
+            | bypassSanitizer
+        "
+            ></div>
+            <div class="col-lg-12 pl-0 pr-0 question-directive">
+                <ng-template
+                    questionDirective
+                    [question]="question"
+                    [form]="controlGroup"
+                    [index]="displayIndex"
+                    [isFocused]="focused_question?.id === question?.id"
+                ></ng-template>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 pl-4 ml-2">
+        <button
+            *ngIf="
+        question.question_type.id !== types.SCALE_MATRIX &&
+        question.question_type.id !== types.QUESTION_GROUP &&
+        question.question_type.id !== types.LIKERT_SCALE &&
+        question.question_type.id !== types.DATE
+      "
+            mat-button
+            (click)="$event.stopPropagation(); next()"
+            id="{{ question.front_id }}-next"
+            [style.background-color]="
+        __surveyPreviewService.surveyFile.survey_styles.button_color
+      "
+            [style.color]="
+        __surveyPreviewService.surveyFile.survey_styles.button_text_color
+      "
+        >
+            <p *ngFor="let item of messages.custom_messages.next_button">
+        <span
+            *ngIf="
+            item.lang_code ===
+            __surveyPreviewService.surveyFile.survey_settings.selectedLanguage
+              .code
+          "
+        >
+          {{ item.text }}
+        </span>
+            </p>
+        </button>
+    </div>
+</div>
+<!-- [hidden]="controlGroup.invalid || isLast" -->

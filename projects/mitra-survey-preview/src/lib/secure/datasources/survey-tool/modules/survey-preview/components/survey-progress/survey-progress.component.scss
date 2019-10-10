@@ -1,0 +1,13 @@
+.progress-survey {
+    position: absolute;
+    bottom: 0;
+    height: 70px;
+    right: 0;
+    width: 100%;
+    z-index: 3;
+    padding: 20px;
+
+    &.build-preview {
+
+    }
+}

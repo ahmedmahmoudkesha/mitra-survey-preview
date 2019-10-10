@@ -1,0 +1,196 @@
+<div
+    [formGroup]="form"
+    *ngIf="properties"
+    class="choice-wrapper"
+>
+    <div *ngIf="!properties.dropdown; else displayDropDown">
+        <mat-selection-list
+            class="pt-0 multiple-choice-component-preview"
+            formControlName="0"
+            (selectionChange)="onSelectionChange($event)"
+            *ngIf="question && question.properties"
+            multiple
+            #choices
+            [ngClass]="{
+                'multiple-choice-component-preview-picture':
+                    properties.picture_options
+            }"
+        >
+            <mat-list-option
+                *ngFor="
+                    let choice of properties.options | hideDeletedOption;
+                    let i = index
+                "
+                [value]="choice"
+                class="survey-select"
+                [disabled]="
+                    properties['max_selection'] &&
+                    choices.selectedOptions.selected.length >=
+                        properties['max_selection'] &&
+                    !isSelected(choice)
+                "
+            >
+                <img
+                    *ngIf="properties.picture_options"
+                    [src]="choice.imageUrl ? choice.imageUrl : '/assets/images/placeholder.png'"
+                    width="40"
+                    class="picture-inside-preview"
+                    [style.background-color]="__surveyPreviewService.surveyFile
+                                        .survey_styles.background_color"
+                />
+                <button class="choice-button aligner-start"
+                        [style.background-color]="properties.picture_options ? __surveyPreviewService.surveyFile
+                                        .survey_styles.background_color : 'transparent'">
+                    <div
+                        class="select-box row"
+                        [ngStyle]="{
+                            'border-color':
+                                __surveyPreviewService.surveyFile.survey_styles
+                                    .button_color,
+                            'background-color':
+                                form.controls['0'].value &&
+                                form.controls['0'].value.length &&
+                                getFrontId(form.controls['0'].value).indexOf(
+                                    choice.front_id
+                                ) >= 0
+                                    ? __surveyPreviewService.surveyFile
+                                          .survey_styles.button_color
+                                    : properties.picture_options ? __surveyPreviewService.surveyFile
+                                          .survey_styles.background_color : 'transparent'
+                        }"
+                    >
+                        <div class="col-6 p-0 text600 aligner">
+                            <fa-icon
+                                class="checkicon"
+                                [style.color]="
+                                    __surveyPreviewService.surveyFile
+                                        .survey_styles.button_text_color
+                                "
+                                *ngIf="
+                                    form.controls['0'].value &&
+                                    form.controls['0'].value.length &&
+                                    getFrontId(
+                                        form.controls['0'].value
+                                    ).indexOf(choice.front_id) >= 0
+                                "
+                                [icon]="['fal', 'check']"
+                            ></fa-icon>
+                        </div>
+                        <div class="col-6 p-0 text600 aligner">
+                            <span
+                                [ngStyle]="{
+                            'color':
+                                form.controls['0'].value &&
+                                form.controls['0'].value.length &&
+                                getFrontId(form.controls['0'].value).indexOf(
+                                    choice.front_id
+                                ) >= 0
+                                    ? __surveyPreviewService.surveyFile
+                                          .survey_styles.button_text_color
+                                    : __surveyPreviewService.surveyFile
+                                          .survey_styles.answer_text_color
+                        }"
+
+                            >{{
+                                __surveyPreviewService.getLetterByIndex(i)
+                                }}</span
+                            >
+                        </div>
+                    </div>
+                    <div
+                        *ngIf="!choice.isOther"
+                        [style.color]="
+                            __surveyPreviewService.surveyFile.survey_styles
+                                .answer_text_color
+                        "
+                        class="choice-text no-margin"
+                        [innerHtml]="
+                            __surveyPreviewService.getCurrentWording(
+                                choice.wordings
+                            )?.text
+                                | replaceQueryParam
+                                | bypassSanitizer
+                        "
+                    ></div>
+                    <div
+                        *ngIf="choice.isOther"
+                        [style.color]="
+                            __surveyPreviewService.surveyFile.survey_styles
+                                .answer_text_color
+                        "
+                        class="choice-text no-margin"
+                        [innerHtml]="'other' | translate"
+                    ></div>
+                </button>
+            </mat-list-option>
+        </mat-selection-list>
+    </div>
+
+    <ng-template #displayDropDown>
+        <mat-form-field appearance="outline" class="w-100 dropDownSelection">
+            <mat-label>
+                {{
+                question.question_type_id === 1
+                    ? 'Choose an option'
+                    : 'Choose more options'
+                }}
+            </mat-label>
+            <mat-select
+                class="pt-0"
+                formControlName="0"
+                (selectionChange)="onDropDownChange($event)"
+                *ngIf="question && question.properties"
+                [multiple]="question.question_type_id === 2"
+                #dropdownchoices
+            >
+                <mat-option
+                    *ngFor="let choice of properties.options | hideDeletedOption; let i = index"
+                    [value]="choice"
+                    class="survey-select"
+                    [ngClass]="properties.picture_options ? 'survey-select-image' : ''"
+                >
+                    <div class="inner-dropdown">
+                        <div
+                            *ngIf="properties.picture_options"
+                            [ngStyle]="{
+                                    'background-image': choice.imageUrl ? 'url(' + choice.imageUrl + ')' : 'url(/assets/images/placeholder.png)',
+                                    'color': __surveyPreviewService.surveyFile.survey_styles.background_color}"
+                            class="picture-inside-preview dd-img-placeholder">
+                        </div>
+                        <div
+                            [innerHtml]="!choice.isOther ? (__surveyPreviewService.getCurrentWording(choice['wordings'])?.text | replaceQueryParam | bypassSanitizer) : ('other' | translate)"
+                            class="dd-text aligner-start"
+                        ></div>
+                    </div>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </ng-template>
+
+    <div
+        *ngIf="properties.additional_info_open_box && isOtherSelected()"
+        class="w-100"
+        [ngClass]="(properties.dropdown || properties.picture_options) ? 'pl-0 pt-2' : 'pl-3 pt-3'"
+    >
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Your Answer</mat-label>
+            <textarea
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                matInput
+            ></textarea>
+        </mat-form-field>
+    </div>
+</div>
+
+
+<!--
+[disabled]="
+properties['max_selection'] &&
+dropdownchoices._value.length >=
+properties['max_selection'] &&
+!isSelected(choice)
+"
+-->

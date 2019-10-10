@@ -1,0 +1,41 @@
+<div [formGroup]="form" class="w-100">
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Your Answer</mat-label>
+        <input
+            autocomplete="off"
+            type="number"
+            matInput
+            formControlName="0"
+            id="{{ question.front_id }}-input"
+        />
+        <div matPrefix>
+            <span
+                [style.color]="
+                    __surveyPreviewService.surveyFile.survey_styles
+                        .answer_text_color
+                "
+                class="position-relative"
+                style="top: -3px;"
+            >{{ properties?.prefix }}&nbsp;</span
+            >
+        </div>
+        <div matSuffix>
+            <span
+                [style.color]="
+                    __surveyPreviewService.surveyFile.survey_styles
+                        .answer_text_color
+                "
+                class="position-relative"
+                style="top: -3px;"
+            >&nbsp;{{ properties?.suffix }}</span
+            >
+        </div>
+        <mat-error *ngIf="form.invalid" class="fs-09 mt-2"
+                   [style.color]="
+                    __surveyPreviewService.surveyFile.survey_styles
+                        .answer_text_color
+                ">
+            {{getErrorMessage() | translate}}
+        </mat-error>
+    </mat-form-field>
+</div>

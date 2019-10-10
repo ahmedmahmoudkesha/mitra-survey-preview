@@ -1,0 +1,155 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "mitra-survey-preview": {
+      "projectType": "library",
+      "root": "projects/mitra-survey-preview",
+      "sourceRoot": "projects/mitra-survey-preview/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/mitra-survey-preview/tsconfig.lib.json",
+            "project": "projects/mitra-survey-preview/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/mitra-survey-preview/src/test.ts",
+            "tsConfig": "projects/mitra-survey-preview/tsconfig.spec.json",
+            "karmaConfig": "projects/mitra-survey-preview/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/mitra-survey-preview/tsconfig.lib.json",
+              "projects/mitra-survey-preview/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "demp": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/demp",
+      "sourceRoot": "projects/demp/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/demp",
+            "index": "projects/demp/src/index.html",
+            "main": "projects/demp/src/main.ts",
+            "polyfills": "projects/demp/src/polyfills.ts",
+            "tsConfig": "projects/demp/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/demp/src/favicon.ico",
+              "projects/demp/src/assets"
+            ],
+            "styles": [
+              "projects/demp/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/demp/src/environments/environment.ts",
+                  "with": "projects/demp/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "demp:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "demp:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "demp:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/demp/src/test.ts",
+            "polyfills": "projects/demp/src/polyfills.ts",
+            "tsConfig": "projects/demp/tsconfig.spec.json",
+            "karmaConfig": "projects/demp/karma.conf.js",
+            "assets": [
+              "projects/demp/src/favicon.ico",
+              "projects/demp/src/assets"
+            ],
+            "styles": [
+              "projects/demp/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/demp/tsconfig.app.json",
+              "projects/demp/tsconfig.spec.json",
+              "projects/demp/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/demp/e2e/protractor.conf.js",
+            "devServerTarget": "demp:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "demp:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "mitra-survey-preview"
+}

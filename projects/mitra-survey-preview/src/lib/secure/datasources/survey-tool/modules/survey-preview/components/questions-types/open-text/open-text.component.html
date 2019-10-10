@@ -1,0 +1,26 @@
+<div *ngIf="form" [formGroup]="form" class="w-100">
+    <div *ngFor="let item of keys(form.controls); let i = index" class="w-100">
+        <div *ngIf="properties.val_max_length"
+             class="max-length-indicator">
+            {{form.get(i.toString())?.value?.length}} / {{properties.val_max_length}}
+        </div>
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label
+                >Your Answer
+                {{ keys(form.controls).length > 1 ? i + 1 : "" }}</mat-label
+            >
+            <textarea
+                id="{{ question.front_id }}-input"
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                matInput
+                [formControlName]="i.toString()"
+            ></textarea>
+            <mat-error *ngIf="form.invalid">
+                {{getErrorMessage(i.toString()) | translate}}
+            </mat-error>
+        </mat-form-field>
+    </div>
+</div>

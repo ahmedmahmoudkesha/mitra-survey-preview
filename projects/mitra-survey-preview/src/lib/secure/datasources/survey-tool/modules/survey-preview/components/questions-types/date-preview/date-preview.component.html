@@ -1,0 +1,102 @@
+<div *ngIf="form" [formGroup]="form" class="w-100">
+<!--    <div [ngSwitch]="dateTimeCase">-->
+<!--        <div *ngSwitchCase="0"></div>-->
+<!--        <mat-form-field class="timeChoosedContainer" *ngSwitchCase="1" appearance="outline">-->
+<!--            <mat-label>Date</mat-label>-->
+<!--            <input-->
+<!--                matInput-->
+<!--                formControlName="choosedDate"-->
+<!--                [owlDateTimeTrigger]="dt1"-->
+<!--                [owlDateTime]="dt1"-->
+<!--                readonly-->
+<!--                (ngModelChange)="changedDate($event)"-->
+<!--            >-->
+<!--            <span>{{ dateChoosed }}</span>-->
+<!--            <owl-date-time-->
+<!--                [pickerType]="'calendar'"-->
+<!--                #dt1-->
+<!--            >-->
+<!--            </owl-date-time>-->
+<!--        </mat-form-field>-->
+<!--        <mat-form-field class="timeChoosedContainer" appearance="outline" *ngSwitchCase="2">-->
+<!--            <mat-label>Time:</mat-label>-->
+<!--                <div *ngIf="properties.timeformat; else twelvehoursFormat">-->
+<!--                        <input-->
+<!--                            matInput-->
+<!--                            formControlName="choosedTime"-->
+<!--                            [owlDateTimeTrigger]="dt2"-->
+<!--                            [owlDateTime]="dt2"-->
+<!--                            readonly-->
+<!--                            (ngModelChange)="changedTime($event, dt2)"-->
+<!--                        >-->
+<!--                        <span>{{ timeChoosed }}</span>-->
+<!--                        <owl-date-time-->
+<!--                            [pickerType]="'timer'"-->
+<!--                            dataType="string"-->
+<!--                            dateFormat="HH:mm"-->
+<!--                            [hour12Timer] = "true"-->
+<!--                            #dt2-->
+<!--                        >-->
+<!--                        </owl-date-time>-->
+<!--                       </div>-->
+<!--                        <ng-template #twelvehoursFormat>-->
+<!--                        <input-->
+<!--                            matInput-->
+<!--                            readonly-->
+<!--                            placeholder="Time:"-->
+<!--                            formControlName="choosedTime"-->
+<!--                            [owlDateTimeTrigger]="dt2"-->
+<!--                            [owlDateTime]="dt2"-->
+<!--                            (ngModelChange)="changedTime($event, dt2)"-->
+<!--                        >-->
+<!--                        <span>{{ timeChoosed }}</span>-->
+<!--                        <owl-date-time-->
+<!--                            [pickerType]="'timer'"-->
+<!--                            dataType="string"-->
+<!--                            dateFormat="HH:mm"-->
+<!--                            #dt2-->
+<!--                        >-->
+<!--                        </owl-date-time>-->
+<!--                        </ng-template>-->
+<!--        </mat-form-field>-->
+<!--        <mat-form-field class="timeChoosedContainer" appearance="outline" *ngSwitchCase="3">-->
+<!--            <mat-label>Date & Time:</mat-label>-->
+<!--            <div *ngIf="properties.timeformat; else twelvehoursFormat">-->
+<!--                <input-->
+<!--                    matInput-->
+<!--                    readonly-->
+<!--                    formControlName="DateTimeChoosed"-->
+<!--                    [owlDateTimeTrigger]="dt3"-->
+<!--                    [owlDateTime]="dt3"-->
+<!--                    (ngModelChange)="changedDateTime($event)"-->
+<!--                >-->
+<!--                <span>{{ choosedDateTime }}</span>-->
+<!--                <owl-date-time-->
+<!--                    [hour12Timer] = "true"-->
+<!--                    #dt3-->
+<!--                >-->
+<!--                </owl-date-time>-->
+<!--            </div>-->
+<!--            <ng-template #twelvehoursFormat>-->
+<!--                <input-->
+<!--                    matInput-->
+<!--                    readonly-->
+<!--                    placeholder="Date & Time:"-->
+<!--                    formControlName="DateTimeChoosed"-->
+<!--                    [owlDateTimeTrigger]="dt3"-->
+<!--                    [owlDateTime]="dt3"-->
+<!--                    (ngModelChange)="changedDateTime($event)"-->
+<!--                >-->
+<!--                <span>{{ choosedDateTime }}</span>-->
+<!--                <owl-date-time-->
+<!--                    #dt3-->
+<!--                >-->
+<!--                </owl-date-time>                -->
+<!--            </ng-template>-->
+<!--        </mat-form-field>-->
+<!--    </div>-->
+<!--    <input-->
+<!--        formControlName="0"-->
+<!--        type="hidden"-->
+<!--    >-->
+</div>

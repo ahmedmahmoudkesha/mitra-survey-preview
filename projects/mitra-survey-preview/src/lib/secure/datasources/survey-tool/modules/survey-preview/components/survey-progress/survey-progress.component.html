@@ -1,0 +1,16 @@
+<div class="progress-survey row aligner"
+     [class.build-preview]="__surveyPreviewService.isBuildPreview"
+     [ngStyle]="{'color': __surveyPreviewService.surveyFile.survey_styles.answer_text_color,
+                'background-color': __surveyPreviewService.surveyFile.survey_styles.background_color,
+                'opacity': 0.8}">
+    <div class="container row">
+        <div class="col-6 aligner-start p-0">
+            Questions {{ total_anwser_questions }}/{{ total_questions }}
+        </div>
+        <div class="col-6 aligner-end p-0">{{ complete }}%</div>
+        <div class="col-12 aligner p-0">
+            <mat-progress-bar mode="determinate" [value]="complete"></mat-progress-bar>
+        </div>
+    </div>
+</div>
+

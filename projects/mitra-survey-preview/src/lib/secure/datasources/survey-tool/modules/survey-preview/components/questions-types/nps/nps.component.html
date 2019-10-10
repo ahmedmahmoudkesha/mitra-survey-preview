@@ -1,0 +1,33 @@
+<div class="nps-label-container">
+    <span *ngFor="let opt of properties.labels" class="flex-1 label">
+        <span *ngIf="opt.wordings[0].text">
+            <span
+                [style.color]="
+                        __surveyPreviewService.surveyFile.survey_styles
+                            .question_text_color
+                    "
+                [innerHtml]="
+                    __surveyPreviewService.getCurrentWording(opt.wordings)
+                        ?.text
+                        | replaceQueryParam
+                        | bypassSanitizer
+                "
+            >
+            </span>
+        </span>
+    </span>
+</div>
+
+<div [formGroup]="form" class="pb-3">
+    <mat-button-toggle-group formControlName="0" class="w-100 d-flex">
+        <mat-button-toggle
+            [style.background-color]="
+                __surveyPreviewService.surveyFile.survey_styles.button_color
+            "
+            *ngFor="let number of npsNumbers" value="{{number}}" class="flex-1">
+            <span [style.color]="__surveyPreviewService.surveyFile.survey_styles.button_text_color">
+                {{number}}
+            </span>
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+</div>

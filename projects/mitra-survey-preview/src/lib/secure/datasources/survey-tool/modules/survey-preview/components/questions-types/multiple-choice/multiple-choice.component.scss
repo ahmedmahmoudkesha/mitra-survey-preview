@@ -1,0 +1,125 @@
+.textarea-fullwidth {
+    width: 90%;
+    display: block;
+    margin: auto;
+}
+
+.choice-wrapper {
+    padding-bottom: 20px;
+
+    .choice-button {
+        width: 100%;
+        background-color: transparent;
+        cursor: pointer;
+        border: none;
+        padding: 10px 0;
+
+        .select-box {
+            width: 45px;
+            height: 25px;
+            border-radius: 4px;
+            border: 1px solid;
+            margin-right: 20px;
+        }
+
+        .choice-text {
+            font-size: 16px;
+            line-height: 26px;
+            text-align: left;
+            width: calc(100% - 45px);
+        }
+    }
+
+    ::ng-deep.mat-pseudo-checkbox {
+        display: none !important;
+    }
+}
+
+.dropDownSelection ::ng-deep {
+    .mat-select-value span {
+        white-space: initial;
+    }
+}
+
+.multiple-choice-component-preview .mat-list-option {
+    height: auto !important;
+}
+
+.multiple-choice-component-preview-picture {
+    mat-list-option {
+        position: relative;
+        width: 50%;
+        display: inline-block;
+        height: auto !important;
+        margin-bottom: 10px;
+    }
+
+    ::ng-deep mat-list-option {
+        .mat-list-item-content {
+            padding: 0 8px !important;
+        }
+
+        .mat-list-text {
+            padding-right: 0px !important;
+        }
+    }
+
+    .picture-inside-preview {
+        width: 100%;
+        object-fit: cover;
+        height: 200px;
+        padding: 4px !important;
+        border-radius: 3px;
+    }
+
+    .select-box.row {
+        position: absolute;
+        top: -40px;
+        left: 15px;
+    }
+
+    .choice-button {
+        position: relative;
+        bottom: 2px;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+    }
+
+    .choice-text {
+        padding: 10px 10px;
+    }
+}
+
+.survey-select-image {
+    height: unset !important;
+
+    .inner-dropdown {
+        display: flex;
+
+        .dd-img-placeholder {
+            margin: 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            background-size: 100px;
+            background-position: center;
+        }
+
+        .dd-img {
+            margin: 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .dd-text {
+            max-width: 200px;
+            white-space: initial;
+            line-height: initial;
+            margin: 5px;
+            word-break: break-all;
+        }
+    }
+}

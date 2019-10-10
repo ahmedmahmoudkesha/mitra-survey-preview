@@ -1,0 +1,95 @@
+<div
+    class="background-div"
+    [ngStyle]="{
+        'background-image':
+            'url(' +
+            __surveyPreviewService.surveyFile.survey_styles.background_image +
+            ')',
+        'background-color':
+            __surveyPreviewService.surveyFile.survey_styles.background_color
+    }"
+    [class.build-preview]="__surveyPreviewService.isBuildPreview"
+    [style.width.%]="__surveyPreviewService.isBuildPreview ? width : 100"
+></div>
+<div
+    class="opacity-div"
+    [ngStyle]="{
+        opacity: __surveyPreviewService.surveyFile.survey_styles.opacity
+    }"
+    [class.build-preview]="__surveyPreviewService.isBuildPreview"
+    [style.width.%]="__surveyPreviewService.isBuildPreview ? width : 100"
+></div>
+<div
+    class="welcome-screen aligner"
+    [class.build-preview]="__surveyPreviewService.isBuildPreview"
+    [style.width.%]="__surveyPreviewService.isBuildPreview ? width : 100"
+>
+    <div class="container">
+        <div class="row">
+            <img *ngIf="question.properties['additional_info_picture_url']" src="{{question.properties['additional_info_picture_url']}}" class="background-image-welcome">
+            <div
+                class="survey-title col-12"
+                [style.color]="
+                __surveyPreviewService.surveyFile.survey_styles
+                    .answer_text_color
+            "
+                [innerHTML]="
+                (__surveyPreviewService.getCurrentWording(
+                    this.question.wordings
+                )?.text) | replaceQueryParam
+            "
+            ></div>
+            <div
+                class="col-12"
+                [style.color]="
+                __surveyPreviewService.surveyFile.survey_styles
+                    .answer_text_color
+            "
+                [innerHTML]="
+                (__surveyPreviewService.getCurrentWording(
+                    question.description
+                )?.text) | replaceQueryParam
+            "
+            ></div>
+            <div class="col-12 pt-4 pb-4">
+                <button
+                    mat-button
+                    (click)="start_survey()"
+                    id="continue-button"
+                    [disabled]="
+                    question.properties.has_agreement &&
+                    !__surveyPreviewService.acceptAgreement
+                "
+                    [style.background-color]="
+                    __surveyPreviewService.surveyFile.survey_styles.button_color
+                "
+                    [ngStyle]="{'color': __surveyPreviewService.surveyFile.survey_styles.button_text_color,
+                        'background-color':__surveyPreviewService.surveyFile.survey_styles.button_color}"
+                >
+                <p *ngFor="let item of this.messages.custom_messages.start_button">
+                    <span *ngIf="item.lang_code === __surveyPreviewService.surveyFile.survey_settings.selectedLanguage.code">
+                        {{item.text}}
+                    </span>
+                </p>
+                </button>
+            </div>
+            <div class="col-12">
+                <mat-checkbox
+                    [(ngModel)]="__surveyPreviewService.acceptAgreement"
+                    (ngModelChange)="focusOnButton($event)"
+                    *ngIf="properties.has_agreement"
+                >
+                <span
+                    class="fs-08"
+                    [style.color]="
+                        __surveyPreviewService.surveyFile.survey_styles
+                            .answer_text_color
+                    "
+                    [innerHTML]="__surveyPreviewService.getCurrentWording(properties.agreement).text"
+                >
+                </span>
+                </mat-checkbox>
+            </div>
+        </div>
+    </div>
+</div>
