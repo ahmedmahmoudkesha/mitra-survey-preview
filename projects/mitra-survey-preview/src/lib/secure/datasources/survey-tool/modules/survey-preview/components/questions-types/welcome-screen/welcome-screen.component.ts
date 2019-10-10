@@ -3,7 +3,7 @@ import { Question } from "../../../../../../../../core/models/survey/Question";
 import { SurveyPreviewService } from "../../../services/survey-preview.service";
 import { WelcomeScreenProperty } from "../../../../../../../../core/models/survey/properties/questionTypesProperties/WelcomeScreenProperty";
 import { BaseQuestionComponent } from "../base-question/base-question.component";
-import { Message } from "projects/mitra-survey-preview/src/lib/core/models/survey/message";
+import { Message } from "./../../../../../../../../core/models/survey/message";
 
 @Component({
   selector: "mitra-welcome-screen",

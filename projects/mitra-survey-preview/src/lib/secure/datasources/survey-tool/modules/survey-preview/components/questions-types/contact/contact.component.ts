@@ -2,7 +2,7 @@ import { ContactProperty } from "./../../../../../../../../core/models/survey/pr
 import { Component, OnDestroy, OnInit, Input } from "@angular/core";
 import { BaseQuestionComponent } from "../base-question/base-question.component";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
-import { Message } from "projects/mitra-survey-preview/src/lib/core/models/survey/message";
+import { Message } from "./../../../../../../../../core/models/survey/message";
 
 @Component({
   selector: "mitra-contact-preview",

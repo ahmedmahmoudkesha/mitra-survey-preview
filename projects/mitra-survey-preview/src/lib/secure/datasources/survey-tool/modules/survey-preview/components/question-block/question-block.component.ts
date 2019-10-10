@@ -12,7 +12,7 @@ import { SurveyPreviewService } from "../../services/survey-preview.service";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { QuestionTypesIdEnum } from "../../../../../../../core/models/survey/QuestionType";
-import { Message } from "projects/mitra-survey-preview/src/lib/core/models/survey/message";
+import { Message } from "../../../../../../../core/models/survey/message";
 
 @Component({
   selector: "mitra-question-block",

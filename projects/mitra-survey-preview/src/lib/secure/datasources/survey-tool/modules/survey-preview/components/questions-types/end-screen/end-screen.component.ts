@@ -2,7 +2,7 @@ import { EndScreenProperty } from "./../../../../../../../../core/models/survey/
 import { Question } from "./../../../../../../../../core/models/survey/Question";
 import { Component, OnInit, Input } from "@angular/core";
 import { BaseQuestionComponent } from "../base-question/base-question.component";
-import { Message } from "projects/mitra-survey-preview/src/lib/core/models/survey/message";
+import { Message } from "./../../../../../../../../core/models/survey/message";
 
 @Component({
   selector: "mitra-end-screen",
